@@ -1,0 +1,49 @@
+// main.sal
+// sal = SmalAssemblyLanguage
+// also, sal in portuguese means salt
+
+// it is meant to look like assembly code
+// but a bit saner
+
+
+// each register has a stack
+// reg <numId> -> sets the current register to <numId>
+// the stack also changes to the one on this register
+reg 0
+
+// push <value> -> pushes <value> to the stack
+push 20
+push 42
+// add -> pops the top values, and adds them together
+// then pushes the result back
+// it checks if the value is a string, and if it is
+// it throws an error
+add
+
+
+// save	-> saves the current value of the register to
+//a memory location
+save
+
+// set and get are your variable handlers
+// set <name> -> pops a value from the stack,
+// and sets the variable <name> to that value
+// get <name> -> gets the value of the variable <name>,
+// and pushes it to the stack
+set x
+
+reg 1
+get x
+load 0
+push 42
+add
+
+// print -> pops from the stack, and outputs the value
+
+print // should print 104
+
+
+// we can just push strings out of the box,
+// due to how we handle push :D 
+push "hello, world"
+print // should print hello, world

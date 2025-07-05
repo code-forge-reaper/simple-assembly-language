@@ -1,0 +1,122 @@
+// ────── setup ──────
+reg 7
+push 800
+set width
+
+push 600
+set height
+
+push "Sal test"
+set title
+
+push 200.0
+set speed  // units per second
+
+push 20.0
+set x
+push 40.0
+set y
+
+reg 6
+get width
+get height
+get title
+call InitWindow
+
+get BLACK
+get RED
+
+jmp loop_start
+
+// ────── input handling ──────
+label input
+  // get dt * speed
+  get dt
+  get speed
+  mult
+  set moveAmt
+
+  // W key
+  get KEY_W
+  call IsKeyDown
+  push 1
+  eq
+  jz skipW
+    get y
+    get moveAmt
+    sub
+    set y
+  label skipW
+
+  // S key
+  get KEY_S
+  call IsKeyDown
+  push 1
+  eq
+  jz skipS
+    get y
+    get moveAmt
+    add
+    set y
+  label skipS
+
+  // A key
+  get KEY_A
+  call IsKeyDown
+  push 1
+  eq
+  jz skipA
+    get x
+    get moveAmt
+    sub
+    set x
+  label skipA
+
+  // D key
+  get KEY_D
+  call IsKeyDown
+  push 1
+  eq
+  jz skipD
+    get x
+    get moveAmt
+    add
+    set x
+  label skipD
+
+jmp inputReturn
+
+// ────── main loop ──────
+label loop_start
+  call WindowShouldClose
+  push 0
+  eq
+  jnz loop_end
+
+  // set delta time
+  call GetFrameTime
+  set dt
+
+  call BeginDrawing
+
+  get BLACK
+  call ClearBackground
+
+  jmp input
+  label inputReturn
+
+  get x
+  cast INT
+  get y
+  cast INT
+  push 20
+  push 20
+  get RED
+  call DrawRectangle
+
+  call EndDrawing
+
+  jmp loop_start
+
+label loop_end
+call CloseWindow

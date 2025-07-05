@@ -1,0 +1,3 @@
+push "test.so"
+loadShared
+call hello
