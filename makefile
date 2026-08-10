@@ -1,4 +1,5 @@
-all: libsal.a sal test.so rl.so
+MODS:= test.so rl.so
+all: libsal.a sal ${MODS}
 
 sal: interp/sal.c
 	cc src/main.c interp/sal.c -o sal -Wextra -Werror -ggdb
@@ -14,4 +15,4 @@ rl.so: mods/rl.c libsal.a
 	cc -fPIC -shared -o rl.so mods/rl.c -L. -lsal  -l raylib -lm -l X11 -fPIC
 
 clean:
-	rm -f libsal.a sal sal.o test.so
+	rm -f libsal.a sal sal.o ${MODS}
