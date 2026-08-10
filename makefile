@@ -1,12 +1,17 @@
-all: libsal.a sal test.so
+all: libsal.a sal test.so rl.so
 
-sal: src/sal.c
-	cc src/main.c src/sal.c -o sal -Wextra -Werror -ggdb -l raylib -lm
-libsal.a:src/sal.c
-	cc -fPIC -c src/sal.c -o sal.o
+sal: interp/sal.c
+	cc src/main.c interp/sal.c -o sal -Wextra -Werror -ggdb
+
+libsal.a:interp/sal.c
+	cc -fPIC -c interp/sal.c -o sal.o
 	ar rcs libsal.a sal.o
 
-test.so: src/test.c libsal.a
-	cc -fPIC -shared -o test.so src/test.c -L. -lsal
+test.so: mods/test.c libsal.a
+	cc -fPIC -shared -o test.so mods/test.c -L. -lsal
+
+rl.so: mods/rl.c libsal.a
+	cc -fPIC -shared -o rl.so mods/rl.c -L. -lsal  -l raylib -lm -l X11 -fPIC
+
 clean:
 	rm -f libsal.a sal sal.o test.so

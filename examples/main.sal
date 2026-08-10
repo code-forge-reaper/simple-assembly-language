@@ -4,7 +4,8 @@
 
 // it is meant to look like assembly code
 // but a bit saner
-
+push "rl.so"
+loadShared
 
 // each register has a stack
 // reg <numId> -> sets the current register to <numId>
